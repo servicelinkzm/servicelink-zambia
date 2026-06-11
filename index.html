@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ServiceLink Zambia — Find trusted local professionals</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bd:#2C1A0E;--bm:#6B3A1F;--gold:#B8860B;--gl:#D4A017;--gb:#E8B84B;
+  --cr:#F5ECD7;--cl:#FAF4E8;--cm:#EDE0C4;--tod:#F5ECD7;--tmod:#C4A882;
+  --td:#2C1A0E;--tm:#5A3E28;--wh:#ffffff;
+  --gg:#EAF3DE;--gt:#27500A;--gb2:#3B6D11;
+  --ag:#FAEEDA;--at:#633806;--ab:#854F0B;
+  --rg:#FCEBEB;--rt:#791F1F;--rb:#A32D2D;
+  --bg2:#E6F1FB;--bt:#0C447C;--bb:#185FA5;
+  --pg:#EEEDFE;--pt:#3C3489;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--cl);color:var(--td);font-size:14px;line-height:1.5;}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;}
+
+/* NAV */
+.nav{background:var(--cl);border-bottom:1px solid var(--cm);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.logo{font-family:'Playfair Display',serif;font-size:20px;color:var(--bd);cursor:pointer;text-decoration:none;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:6px;align-items:center;}
+.nav-link{font-size:13px;color:var(--tm);cursor:pointer;padding:7px 12px;border-radius:7px;font-weight:500;background:none;border:none;font-family:'Inter',sans-serif;}
+.nav-link:hover{background:rgba(184,134,11,0.1);color:var(--bd);}
+.btn-primary{background:var(--gold);color:var(--wh);border:none;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-primary:hover{background:var(--gl);}
+.btn-outline{background:transparent;color:var(--bm);border:1.5px solid var(--gold);padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-outline:hover{background:rgba(184,134,11,0.06);}
+
+/* PAGES */
+.page{display:none;}
+.page.active{display:block;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bd);color:var(--tod);padding:14px 20px;border-radius:12px;font-size:13px;font-weight:500;border-left:4px solid var(--gold);z-index:9999;opacity:0;transform:translateY(12px);transition:all .3s;pointer-events:none;max-width:320px;box-shadow:0 4px 24px rgba(0,0,0,0.18);}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* ══ HOMEPAGE ══ */
+.hero{background:var(--bd);padding:72px 32px 56px;text-align:center;}
+.hero-eyebrow{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gb);margin-bottom:16px;font-weight:500;}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);color:var(--tod);line-height:1.12;margin-bottom:16px;}
+.hero h1 em{font-style:italic;color:var(--gb);}
+.hero-sub{font-size:16px;color:var(--tmod);max-width:500px;margin:0 auto 32px;line-height:1.75;}
+.search-box{background:var(--wh);border-radius:14px;padding:20px;max-width:560px;margin:0 auto 40px;box-shadow:0 2px 32px rgba(0,0,0,0.2);}
+.search-input-row{display:flex;align-items:center;gap:10px;border:1.5px solid var(--cm);border-radius:9px;padding:11px 14px;margin-bottom:12px;background:var(--cl);}
+.search-input-row i{color:var(--gold);font-size:18px;}
+.search-input-row input{border:none;background:transparent;font-size:14px;color:var(--td);outline:none;flex:1;font-family:'Inter',sans-serif;}
+.search-input-row input::placeholder{color:#9E8060;}
+.search-selects{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.search-selects select{border:1.5px solid var(--cm);background:var(--cl);border-radius:9px;padding:10px 12px;font-size:13px;color:var(--tm);outline:none;font-family:'Inter',sans-serif;cursor:pointer;}
+.search-selects select:focus{border-color:var(--gold);}
+.btn-search{width:100%;background:var(--gold);color:var(--wh);border:none;padding:13px;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-search:hover{background:var(--gl);}
+.hero-stats{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gb);line-height:1;}
+.stat-lbl{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--tmod);margin-top:4px;}
+
+.section{padding:56px 32px;}
+.section-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:8px;font-weight:500;}
+.section h2{font-size:clamp(1.5rem,3vw,2.2rem);color:var(--bd);text-align:center;margin-bottom:10px;}
+.section-sub{font-size:15px;color:var(--tm);text-align:center;max-width:460px;margin:0 auto 32px;line-height:1.75;}
+
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:900px;margin:0 auto;}
+.cat-card{background:var(--wh);border:1px solid var(--cm);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:border-color .2s,transform .2s;}
+.cat-card:hover{border-color:var(--gold);transform:translateY(-3px);}
+.cat-icon{width:52px;height:52px;border-radius:50%;background:var(--cr);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px;}
+.cat-name{font-size:13px;font-weight:600;color:var(--bd);margin-bottom:3px;}
+.cat-count{font-size:11px;color:var(--gold);}
+
+.vendor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;max-width:960px;margin:0 auto;}
+.vendor-card{background:var(--wh);border:1px solid var(--cm);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .2s;}
+.vendor-card:hover{border-color:var(--gold);transform:translateY(-3px);}
+.vendor-banner{height:80px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;}
+.vendor-body{padding:14px;}
+.vendor-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.vendor-name{font-size:14px;font-weight:600;color:var(--bd);}
+.verified-badge{font-size:9px;background:rgba(184,134,11,0.12);color:var(--gold);padding:2px 8px;border-radius:20px;font-weight:600;border:1px solid rgba(184,134,11,0.2);}
+.vendor-cat{font-size:12px;color:var(--tm);margin-bottom:6px;}
+.vendor-stars{font-size:13px;color:var(--gold);margin-bottom:6px;}
+.vendor-loc{font-size:12px;color:#9E8060;display:flex;align-items:center;gap:4px;}
+.btn-book{width:100%;margin-top:12px;background:var(--bd);color:var(--gb);border:none;padding:9px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-book:hover{background:var(--bm);}
+
+.hiw{background:var(--bd);padding:56px 32px;}
+.hiw h2{color:var(--tod);}
+.hiw .section-sub{color:var(--tmod);}
+.hiw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;max-width:860px;margin:0 auto;}
+.hiw-step{text-align:center;padding:24px 16px;border:1px solid rgba(184,134,11,0.15);border-radius:14px;background:rgba(255,255,255,0.03);}
+.hiw-step-num{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gb);opacity:.28;line-height:1;}
+.hiw-step-icon{font-size:28px;color:var(--gb);margin:8px 0;}
+.hiw-step-title{font-weight:600;font-size:14px;color:var(--tod);margin-bottom:6px;}
+.hiw-step-desc{font-size:12px;color:var(--tmod);line-height:1.65;}
+
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:920px;margin:0 auto;}
+.testi-card{background:var(--wh);border:1px solid var(--cm);border-radius:14px;padding:20px;}
+.testi-stars{color:var(--gold);font-size:14px;margin-bottom:10px;}
+.testi-quote{font-size:14px;color:var(--tm);line-height:1.7;font-style:italic;margin-bottom:14px;}
+.testi-author{display:flex;align-items:center;gap:11px;}
+.testi-av{width:38px;height:38px;border-radius:50%;background:var(--cr);border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:var(--gold);}
+.testi-name{font-weight:600;font-size:13px;color:var(--bd);}
+.testi-role{font-size:11px;color:#9E8060;}
+
+.cta-section{background:var(--bm);padding:64px 32px;text-align:center;}
+.cta-section h2{color:var(--tod);font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:12px;}
+.cta-section h2 em{color:var(--gb);font-style:italic;}
+.cta-sub{font-size:15px;color:var(--tmod);max-width:460px;margin:0 auto 24px;line-height:1.75;}
+.cta-perks{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:28px;}
+.cta-perk{font-size:13px;color:var(--tmod);display:flex;align-items:center;gap:6px;}
+.cta-perk i{color:var(--gb);font-size:15px;}
+.cta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.btn-cta{background:var(--gold);color:var(--wh);border:none;padding:14px 32px;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-cta:hover{background:var(--gl);}
+.btn-ghost{background:transparent;color:var(--tod);border:1.5px solid rgba(245,236,215,0.3);padding:13px 26px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-ghost:hover{border-color:rgba(245,236,215,0.6);}
+
+.footer{background:var(--bd);padding:48px 32px 24px;border-top:1px solid rgba(184,134,11,0.1);}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;max-width:960px;margin:0 auto 32px;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--tod);display:block;margin-bottom:10px;text-decoration:none;}
+.footer-logo span{color:var(--gb);}
+.footer-desc{font-size:13px;color:var(--tmod);line-height:1.7;}
+.footer-col-title{font-weight:600;font-size:11px;color:var(--tod);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+.footer-col a{display:block;font-size:13px;color:var(--tmod);text-decoration:none;margin-bottom:8px;cursor:pointer;}
+.footer-col a:hover{color:var(--gb);}
+.footer-bottom{max-width:960px;margin:0 auto;border-top:1px solid rgba(184,134,11,0.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-copy{font-size:12px;color:rgba(196,168,130,0.45);}
+.footer-social{display:flex;gap:14px;}
+.footer-social a{color:var(--tmod);font-size:20px;text-decoration:none;}
+.footer-social a:hover{color:var(--gb);}
+
+/* ══ SEARCH ══ */
+.search-header{background:var(--bd);padding:32px;}
+.search-header h2{color:var(--tod);font-size:1.5rem;margin-bottom:16px;}
+.search-bar-row{display:flex;gap:10px;flex-wrap:wrap;max-width:800px;}
+.search-bar-row input{flex:1;min-width:200px;border:1.5px solid rgba(184,134,11,0.3);background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 14px;font-size:13px;color:var(--tod);outline:none;font-family:'Inter',sans-serif;}
+.search-bar-row input::placeholder{color:var(--tmod);}
+.search-bar-row input:focus{border-color:var(--gold);}
+.search-bar-row select{border:1.5px solid rgba(184,134,11,0.3);background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 12px;font-size:13px;color:var(--tod);outline:none;font-family:'Inter',sans-serif;cursor:pointer;}
+.search-bar-row button{background:var(--gold);color:var(--wh);border:none;padding:10px 22px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.search-bar-row button:hover{background:var(--gl);}
+.results-area{padding:28px 32px;}
+.results-count{font-size:14px;color:var(--tm);margin-bottom:18px;}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+
+/* ══ VENDOR PROFILE ══ */
+.vp-hero{background:var(--bd);padding:28px 32px 0;}
+.vp-hero-inner{max-width:960px;margin:0 auto;}
+.vp-top{display:flex;gap:18px;align-items:flex-start;margin-bottom:18px;}
+.vp-avatar{width:80px;height:80px;border-radius:14px;background:var(--cm);border:3px solid var(--gb);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);flex-shrink:0;}
+.vp-info{flex:1;}
+.vp-name{font-size:1.6rem;color:var(--tod);margin-bottom:4px;}
+.vp-tagline{font-size:13px;color:var(--tmod);margin-bottom:10px;}
+.vp-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;}
+.badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;}
+.badge-gold{background:rgba(184,134,11,0.18);color:var(--gb);border:1px solid rgba(232,184,75,0.2);}
+.badge-green{background:rgba(15,110,86,0.2);color:#5DCAA5;border:1px solid rgba(93,202,165,0.2);}
+.badge-cat{background:rgba(255,255,255,0.08);color:var(--tmod);}
+.vp-meta-row{display:flex;gap:18px;flex-wrap:wrap;}
+.vp-meta-item{font-size:12px;color:var(--tmod);display:flex;align-items:center;gap:5px;}
+.vp-meta-item i{font-size:14px;color:var(--gb);}
+.vp-rating{text-align:right;flex-shrink:0;}
+.vp-rating-num{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gb);line-height:1;}
+.vp-rating-stars{font-size:14px;color:var(--gold);margin:3px 0;}
+.vp-rating-count{font-size:11px;color:var(--tmod);}
+.vp-tabs{display:flex;border-top:1px solid rgba(184,134,11,0.15);margin-top:16px;}
+.vp-tab{padding:12px 20px;font-size:13px;font-weight:500;color:var(--tmod);cursor:pointer;border-bottom:2px solid transparent;}
+.vp-tab:hover{color:var(--tod);}
+.vp-tab.active{color:var(--gb);border-bottom-color:var(--gb);}
+.vp-body{max-width:960px;margin:0 auto;padding:24px 32px;display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;}
+.vp-section{margin-bottom:24px;}
+.vp-section-title{font-size:1.05rem;color:var(--bd);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--cm);}
+.vp-desc{font-size:14px;color:var(--tm);line-height:1.8;}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:11px;}
+.svc-card{background:var(--wh);border:1px solid var(--cm);border-radius:11px;padding:14px;cursor:pointer;transition:border-color .2s;}
+.svc-card:hover{border-color:var(--gold);}
+.svc-name{font-size:13px;font-weight:600;color:var(--bd);margin-bottom:3px;}
+.svc-price{font-size:12px;color:var(--gold);font-weight:600;}
+.svc-desc{font-size:11px;color:var(--tm);margin-top:3px;line-height:1.5;}
+.portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.port-img{aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;border:1px solid var(--cm);cursor:pointer;transition:border-color .2s;}
+.port-img:hover{border-color:var(--gold);}
+.review-card{background:var(--wh);border:1px solid var(--cm);border-radius:11px;padding:16px;margin-bottom:12px;}
+.rev-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.rev-reviewer{display:flex;align-items:center;gap:10px;}
+.rev-av{width:34px;height:34px;border-radius:50%;background:var(--cr);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--gold);}
+.rev-name{font-size:13px;font-weight:600;color:var(--bd);}
+.rev-date{font-size:11px;color:#9E8060;}
+.rev-stars{font-size:13px;color:var(--gold);}
+.rev-text{font-size:13px;color:var(--tm);line-height:1.7;font-style:italic;}
+.rev-svc{margin-top:7px;font-size:11px;background:rgba(184,134,11,0.08);color:var(--gold);padding:2px 9px;border-radius:20px;display:inline-block;}
+
+/* sidebar */
+.book-card{background:var(--wh);border:1.5px solid var(--cm);border-radius:14px;overflow:hidden;margin-bottom:14px;position:sticky;top:80px;}
+.book-card-head{background:var(--bd);padding:16px 18px;}
+.book-card-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--tod);margin-bottom:3px;}
+.book-card-sub{font-size:11px;color:var(--tmod);}
+.book-card-body{padding:16px 18px;}
+.form-row{margin-bottom:12px;}
+.form-label{font-size:10px;font-weight:600;color:var(--tm);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;display:block;}
+.form-input,.form-select,.form-textarea{width:100%;border:1.5px solid var(--cm);background:var(--cl);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--td);outline:none;font-family:'Inter',sans-serif;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
+.form-textarea{height:70px;resize:none;line-height:1.6;}
+.btn-book-main{width:100%;background:var(--gold);color:var(--wh);border:none;padding:12px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-bottom:8px;}
+.btn-book-main:hover{background:var(--gl);}
+.btn-wa{width:100%;background:#25D366;color:var(--wh);border:none;padding:11px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;}
+.avail-note{font-size:11px;color:var(--tm);background:var(--cr);border-radius:7px;padding:8px 12px;text-align:center;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:5px;}
+.contact-card{background:var(--wh);border:1px solid var(--cm);border-radius:13px;padding:16px;}
+.contact-title{font-size:13px;font-weight:600;color:var(--bd);margin-bottom:12px;}
+.contact-row{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--tm);margin-bottom:9px;}
+.contact-row i{font-size:16px;color:var(--gold);width:18px;}
+.stat-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px;}
+.stat-mini{background:var(--cl);border-radius:9px;padding:11px;text-align:center;}
+.stat-mini-val{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--bd);line-height:1;}
+.stat-mini-lbl{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+
+/* ══ BOOKING ══ */
+.bf-stepper{background:var(--wh);border-bottom:1px solid var(--cm);padding:16px 32px;}
+.bf-steps{display:flex;align-items:center;justify-content:center;max-width:600px;margin:0 auto;}
+.bf-step{display:flex;align-items:center;gap:9px;flex:1;}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;}
+.step-num.done{background:var(--gg);color:var(--gb2);}
+.step-num.active{background:var(--gold);color:var(--wh);}
+.step-num.todo{background:var(--cm);color:var(--tm);}
+.step-label{font-size:12px;font-weight:500;}
+.step-label.active{color:var(--bd);}
+.step-label.done{color:var(--gb2);}
+.step-label.todo{color:var(--tm);}
+.step-line{flex:1;height:1px;background:var(--cm);margin:0 6px;}
+.step-line.done{background:var(--gb2);}
+.bf-body{max-width:900px;margin:0 auto;padding:24px 32px;display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start;}
+.bf-card{background:var(--wh);border:1px solid var(--cm);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.bf-card-head{padding:12px 16px;border-bottom:1px solid var(--cm);display:flex;align-items:center;gap:9px;}
+.bf-card-icon{width:30px;height:30px;border-radius:8px;background:rgba(184,134,11,0.1);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:15px;}
+.bf-card-title{font-size:13px;font-weight:600;color:var(--bd);}
+.bf-card-body{padding:14px 16px;}
+.svc-option{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1.5px solid var(--cm);border-radius:9px;cursor:pointer;margin-bottom:9px;transition:border-color .15s,background .15s;}
+.svc-option.selected{border-color:var(--gold);background:rgba(184,134,11,0.04);}
+.svc-option:hover{border-color:var(--gl);}
+.svc-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--cm);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.svc-radio.checked{border-color:var(--gold);background:var(--gold);}
+.svc-radio.checked::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--wh);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.sum-sidebar{background:var(--wh);border:1px solid var(--cm);border-radius:14px;overflow:hidden;position:sticky;top:80px;}
+.sum-head{background:var(--bd);padding:14px 16px;}
+.sum-title{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--tod);}
+.sum-sub{font-size:11px;color:var(--tmod);margin-top:2px;}
+.sum-vendor{display:flex;align-items:center;gap:11px;padding:13px 16px;border-bottom:1px solid var(--cm);}
+.sum-av{width:38px;height:38px;border-radius:9px;background:var(--cm);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);}
+.sum-vname{font-size:13px;font-weight:600;color:var(--bd);}
+.sum-vcat{font-size:11px;color:var(--tm);}
+.sum-body{padding:13px 16px;}
+.sum-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--cm);font-size:12px;}
+.sum-row:last-of-type{border-bottom:none;}
+.sum-lbl{color:var(--tm);}
+.sum-val{color:var(--bd);font-weight:500;text-align:right;max-width:150px;}
+.sum-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:2px solid var(--cm);}
+.sum-total-lbl{font-size:13px;font-weight:600;color:var(--bd);}
+.sum-total-val{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold);}
+.sum-note{font-size:11px;color:var(--tm);margin-top:8px;line-height:1.5;}
+.bf-nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+.btn-back{background:transparent;border:1.5px solid var(--cm);color:var(--tm);padding:9px 18px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;}
+.btn-back:hover{border-color:var(--gold);}
+.btn-next{background:var(--gold);color:var(--wh);border:none;padding:10px 26px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;}
+.btn-next:hover{background:var(--gl);}
+.confirm-screen{text-align:center;padding:56px 32px;}
+.confirm-icon{width:70px;height:70px;border-radius:50%;background:var(--gg);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:30px;color:var(--gb2);}
+.confirm-title{font-size:1.8rem;color:var(--bd);margin-bottom:8px;}
+.confirm-sub{font-size:15px;color:var(--tm);max-width:440px;margin:0 auto 20px;line-height:1.75;}
+.confirm-ref{background:var(--ag);border:1px solid rgba(133,79,11,0.2);border-radius:10px;padding:12px 20px;display:inline-block;margin-bottom:24px;}
+.confirm-ref-lbl{font-size:10px;color:var(--at);text-transform:uppercase;letter-spacing:1.5px;}
+.confirm-ref-val{font-size:1.2rem;font-weight:600;color:var(--bd);font-family:'Playfair Display',serif;}
+.confirm-steps{background:var(--wh);border:1px solid var(--cm);border-radius:13px;padding:18px;max-width:440px;margin:0 auto 24px;text-align:left;}
+.cs-item{display:flex;align-items:flex-start;gap:11px;padding:8px 0;border-bottom:1px solid var(--cm);}
+.cs-item:last-child{border-bottom:none;}
+.cs-num{width:22px;height:22px;border-radius:50%;background:rgba(184,134,11,0.12);color:var(--gold);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cs-text{font-size:13px;color:var(--tm);line-height:1.6;}
+.cs-text strong{color:var(--bd);}
+.info-box{background:var(--bg2);border:1px solid rgba(24,95,165,0.2);border-radius:10px;padding:13px 16px;display:flex;gap:11px;margin-bottom:14px;}
+.info-box i{color:var(--bt);font-size:18px;flex-shrink:0;margin-top:2px;}
+.info-box-text{font-size:13px;color:var(--bt);line-height:1.65;}
+
+/* ══ VENDOR DASHBOARD ══ */
+.dash{display:grid;grid-template-columns:220px 1fr;min-height:100vh;}
+.dash-sb{background:var(--bd);display:flex;flex-direction:column;}
+.dash-brand{padding:18px 20px;border-bottom:1px solid rgba(184,134,11,0.15);}
+.dash-logo{font-family:'Playfair Display',serif;font-size:16px;color:var(--tod);}
+.dash-logo span{color:var(--gb);}
+.dash-logo-sub{font-size:10px;color:var(--tmod);margin-top:2px;}
+.dash-pill{margin:14px 14px 0;background:rgba(255,255,255,0.05);border:1px solid rgba(184,134,11,0.15);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;}
+.dash-pill-av{width:34px;height:34px;border-radius:9px;background:rgba(184,134,11,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--gb);flex-shrink:0;}
+.dash-pill-name{font-size:12px;font-weight:600;color:var(--tod);}
+.dash-pill-cat{font-size:10px;color:var(--tmod);}
+.dash-verified{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--gb);margin-top:3px;}
+.dash-nav{padding:14px 0;flex:1;}
+.dash-nav-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(196,168,130,0.35);padding:8px 18px 4px;font-weight:600;}
+.dash-nav-item{display:flex;align-items:center;gap:10px;padding:9px 14px;margin:1px 8px;border-radius:9px;cursor:pointer;color:var(--tmod);font-size:13px;font-weight:500;transition:background .15s,color .15s;}
+.dash-nav-item:hover{background:rgba(255,255,255,0.06);color:var(--tod);}
+.dash-nav-item.active{background:rgba(184,134,11,0.18);color:var(--gb);}
+.dash-nav-item i{font-size:17px;width:19px;flex-shrink:0;}
+.dash-badge{margin-left:auto;background:var(--gold);color:var(--wh);font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px;}
+.dash-sb-footer{padding:14px;border-top:1px solid rgba(184,134,11,0.1);}
+.dash-main{display:flex;flex-direction:column;background:var(--cl);}
+.dash-topbar{background:var(--wh);border-bottom:1px solid var(--cm);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.dash-page-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--bd);}
+.dash-page-sub{font-size:11px;color:var(--tmod);}
+.dash-content{padding:18px 20px;}
+.dash-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:14px;}
+.d-stat{background:var(--wh);border:1px solid var(--cm);border-radius:11px;padding:14px;}
+.d-stat-top{display:flex;justify-content:space-between;margin-bottom:9px;}
+.d-stat-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.d-stat-trend{font-size:11px;display:flex;align-items:center;gap:3px;color:var(--gb2);}
+.d-stat-val{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--bd);line-height:1;}
+.d-stat-lbl{font-size:11px;color:var(--tm);margin-top:3px;}
+.dash-two{display:grid;grid-template-columns:1fr 280px;gap:13px;margin-bottom:13px;}
+.d-card{background:var(--wh);border:1px solid var(--cm);border-radius:12px;overflow:hidden;}
+.d-card-head{padding:11px 14px;border-bottom:1px solid var(--cm);display:flex;align-items:center;justify-content:space-between;}
+.d-card-title{font-size:13px;font-weight:600;color:var(--bd);display:flex;align-items:center;gap:6px;}
+.d-card-title i{font-size:15px;color:var(--gold);}
+.d-card-action{font-size:11px;color:var(--gold);cursor:pointer;font-weight:500;}
+.d-card-body{padding:12px 14px;}
+.bk-row{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--cm);}
+.bk-row:last-child{border-bottom:none;}
+.bk-av{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;}
+.bk-name{font-size:13px;font-weight:600;color:var(--bd);}
+.bk-meta{font-size:11px;color:var(--tm);margin-top:2px;}
+.bk-action-btns{display:flex;gap:5px;margin-top:4px;}
+.btn-accept{background:var(--gg);color:var(--gt);border:1px solid rgba(59,109,17,0.2);padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-accept:hover{background:#C0DD97;}
+.btn-decline{background:var(--rg);color:var(--rt);border:1px solid rgba(163,45,45,0.2);padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.bk-right{text-align:right;}
+.bk-amt{font-size:13px;font-weight:600;color:var(--bd);}
+.bk-date{font-size:11px;color:var(--tm);}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;}
+.pill-pending{background:var(--ag);color:var(--at);}
+.pill-confirmed{background:var(--gg);color:var(--gt);}
+.pill-completed{background:var(--bg2);color:var(--bt);}
+.q-row{padding:10px 0;border-bottom:1px solid var(--cm);}
+.q-row:last-child{border-bottom:none;}
+.q-top{display:flex;justify-content:space-between;margin-bottom:4px;}
+.q-title{font-size:13px;font-weight:600;color:var(--bd);}
+.q-time{font-size:11px;color:var(--tm);}
+.q-desc{font-size:12px;color:var(--tm);line-height:1.55;margin-bottom:6px;}
+.btn-respond{background:var(--gold);color:var(--wh);border:none;padding:5px 13px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.dash-bottom{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.ri-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.ri-name{font-size:13px;font-weight:600;color:var(--bd);}
+.ri-stars{font-size:13px;color:var(--gold);}
+.ri-text{font-size:12px;color:var(--tm);line-height:1.55;font-style:italic;}
+.ri-svc{font-size:11px;color:var(--gold);margin-top:4px;}
+.rev-item{padding:9px 0;border-bottom:1px solid var(--cm);}
+.rev-item:last-child{border-bottom:none;}
+.bar-track{height:6px;background:var(--cm);border-radius:3px;overflow:hidden;margin:6px 0 12px;}
+.bar-fill{height:100%;background:var(--gold);border-radius:3px;}
+.pc-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--cm);}
+.pc-item:last-child{border-bottom:none;}
+.pc-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.pc-done{background:var(--gg);color:var(--gb2);}
+.pc-todo{background:var(--ag);color:var(--ab);}
+.pc-label{font-size:12px;color:var(--bd);font-weight:500;flex:1;}
+.pc-sub{font-size:10px;color:var(--tm);}
+.pc-pct{font-size:11px;font-weight:600;color:var(--gold);}
+
+/* ══ MOBILE ══ */
+@media(max-width:768px){
+  .nav{padding:0 16px;}
+  .nav-links .nav-link{display:none;}
+  .hero{padding:48px 20px 40px;}
+  .section{padding:40px 20px;}
+  .hiw{padding:40px 20px;}
+  .cta-section{padding:48px 20px;}
+  .footer{padding:40px 20px 20px;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .vp-body{grid-template-columns:1fr;padding:20px;}
+  .vp-body > div:last-child{order:-1;}
+  .bf-body{grid-template-columns:1fr;padding:20px;}
+  .bf-body > div:last-child{display:none;}
+  .dash{grid-template-columns:1fr;}
+  .dash-sb{display:none;}
+  .dash-stats{grid-template-columns:1fr 1fr;}
+  .dash-two,.dash-bottom{grid-template-columns:1fr;}
+  .results-area{padding:20px;}
+  .search-header{padding:20px;}
+  .cat-grid{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));}
+}
+@media(max-width:480px){
+  .dash-stats{grid-template-columns:1fr 1fr;}
+  .hero h1{font-size:1.7rem;}
+  .search-selects{grid-template-columns:1fr;}
+  .two-col{grid-template-columns:1fr;}
+  .confirm-screen{padding:32px 20px;}
+  .vp-top{flex-wrap:wrap;}
+  .vp-rating{width:100%;text-align:left;margin-top:8px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" onclick="nav('home')">Service<span>Link</span> ZM</a>
+  <div class="nav-links">
+    <button class="nav-link" onclick="nav('search')">Browse</button>
+    <button class="nav-link" onclick="nav('vendor-dashboard')">Vendor portal</button>
+    <button class="btn-outline" onclick="showToast('Sign in coming soon!')">Sign in</button>
+    <button class="btn-primary" onclick="nav('search')">Post a request</button>
+  </div>
+</nav>
+
+<div id="toast" class="toast"></div>
+
+<!-- ══ HOMEPAGE ══ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <p class="hero-eyebrow">Zambia's trusted service marketplace</p>
+    <h1>Find the right <em>professional</em><br>for every job</h1>
+    <p class="hero-sub">Search verified local providers, compare services, and book with confidence — all in one place.</p>
+    <div class="search-box">
+      <div class="search-input-row">
+        <i class="ti ti-search"></i>
+        <input id="hero-search" type="text" placeholder="What service are you looking for?">
+      </div>
+      <div class="search-selects">
+        <select id="hero-city"><option>All cities</option><option>Lusaka</option><option>Ndola</option><option>Kitwe</option><option>Livingstone</option></select>
+        <select id="hero-cat"><option>All categories</option><option>Home Services</option><option>Beauty Services</option><option>Event Services</option></select>
+      </div>
+      <button class="btn-search" onclick="doSearch()">Search providers</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">487</div><div class="stat-lbl">Vendors</div></div>
+      <div class="stat"><div class="stat-num">1,204</div><div class="stat-lbl">Bookings made</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">Cities</div></div>
+      <div class="stat"><div class="stat-num">4.8★</div><div class="stat-lbl">Avg. rating</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">Browse by category</p>
+    <h2>Every service you need, locally</h2>
+    <p class="section-sub">Three launch categories, dozens of specialisations — all verified.</p>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="filterAndSearch('Plumbers')"><div class="cat-icon">🔧</div><div class="cat-name">Plumbers</div><div class="cat-count">34 providers</div></div>
+      <div class="cat-card" onclick="filterAndSearch('Electricians')"><div class="cat-icon">⚡</div><div class="cat-name">Electricians</div><div class="cat-count">28 providers</div></div>
+      <div class="cat-card" onclick="filterAndSearch('Makeup Artists')"><div class="cat-icon">💄</div><div class="cat-name">Makeup artists</div><div class="cat-count">41 providers</div></div>
+      <div class="cat-card" onclick="filterAndSearch('Hair Salons')"><div class="cat-icon">✂️</div><div class="cat-name">Hair salons</div><div class="cat-count">57 providers</div></div>
+      <div class="cat-card" onclick="filterAndSearch('Photographers')"><div class="cat-icon">📸</div><div class="cat-name">Photographers</div><div class="cat-count">38 providers</div></div>
+      <div class="cat-card" onclick="filterAndSearch('Caterers')"><div class="cat-icon">🎂</div><div class="cat-name">Caterers</div><div class="cat-count">31 providers</div></div>
+      <div class="cat-card" onclick="filterAndSearch('DJs')"><div class="cat-icon">🎶</div><div class="cat-name">DJs &amp; MCs</div><div class="cat-count">22 providers</div></div>
+      <div class="cat-card" onclick="filterAndSearch('Cleaners')"><div class="cat-icon">🧹</div><div class="cat-name">Cleaners</div><div class="cat-count">46 providers</div></div>
+    </div>
+  </div>
+
+  <div class="hiw section">
+    <p class="section-eyebrow">Simple process</p>
+    <h2 style="color:var(--tod);">How ServiceLink works</h2>
+    <p class="section-sub" style="color:var(--tmod);">From search to completed job — seamless.</p>
+    <div class="hiw-grid">
+      <div class="hiw-step"><div class="hiw-step-num">01</div><div class="hiw-step-icon"><i class="ti ti-search"></i></div><div class="hiw-step-title">Search or post a request</div><div class="hiw-step-desc">Browse categories or describe your job. Vendors respond.</div></div>
+      <div class="hiw-step"><div class="hiw-step-num">02</div><div class="hiw-step-icon"><i class="ti ti-user-check"></i></div><div class="hiw-step-title">Compare verified providers</div><div class="hiw-step-desc">Review profiles, portfolios, pricing and ratings before choosing.</div></div>
+      <div class="hiw-step"><div class="hiw-step-num">03</div><div class="hiw-step-icon"><i class="ti ti-calendar-check"></i></div><div class="hiw-step-title">Book and confirm</div><div class="hiw-step-desc">Send a booking request. Vendor confirms your date.</div></div>
+      <div class="hiw-step"><div class="hiw-step-num">04</div><div class="hiw-step-icon"><i class="ti ti-star"></i></div><div class="hiw-step-title">Review after the job</div><div class="hiw-step-desc">Leave a verified review and help the next customer.</div></div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--wh);">
+    <p class="section-eyebrow">Hand-picked</p>
+    <h2>Featured providers</h2>
+    <p class="section-sub">Top-rated, verified professionals trusted by customers across Zambia.</p>
+    <div class="vendor-grid" id="featured-vendors"></div>
+  </div>
+
+  <div class="section" style="background:var(--cr);">
+    <p class="section-eyebrow">Real customers</p>
+    <h2>What people are saying</h2>
+    <p class="section-sub">Verified reviews from real bookings on ServiceLink.</p>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"Found a reliable plumber in under 10 minutes. He showed up on time and fixed the problem same day. Never going back to WhatsApp groups."</p><div class="testi-author"><div class="testi-av">CM</div><div><div class="testi-name">Chanda Mutale</div><div class="testi-role">Lusaka · Home services</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"Posted a quote request for my wedding photography and got 5 responses in two hours. Booked the perfect photographer within my budget."</p><div class="testi-author"><div class="testi-av">NS</div><div><div class="testi-name">Natasha Siame</div><div class="testi-role">Ndola · Event services</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"As a makeup artist, ServiceLink has brought me more steady clients than Facebook ever did. The booking system keeps everything organised."</p><div class="testi-author"><div class="testi-av">BM</div><div><div class="testi-name">Bridget Mwanza</div><div class="testi-role">Lusaka · Vendor · Beauty</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <p class="section-eyebrow" style="color:var(--gb);">Grow your business</p>
+    <h2>Turn your skills into <em>steady income</em></h2>
+    <p class="cta-sub">Join hundreds of providers already getting consistent leads through ServiceLink. Your profile does the selling — you do the work.</p>
+    <div class="cta-perks">
+      <span class="cta-perk"><i class="ti ti-check"></i> Free to join</span>
+      <span class="cta-perk"><i class="ti ti-check"></i> Verified badge</span>
+      <span class="cta-perk"><i class="ti ti-check"></i> Instant booking requests</span>
+      <span class="cta-perk"><i class="ti ti-check"></i> No upfront cost</span>
+    </div>
+    <div class="cta-btns">
+      <button class="btn-cta" onclick="nav('vendor-dashboard')">List your business</button>
+      <button class="btn-ghost" onclick="showToast('Learn more page coming soon!')">Learn more</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div><a class="footer-logo" onclick="nav('home')">Service<span>Link</span> ZM</a><p class="footer-desc">Zambia's trusted marketplace for local services. Find professionals, compare prices, book instantly.</p></div>
+      <div class="footer-col"><div class="footer-col-title">Services</div><a onclick="filterAndSearch('Home Services')">Home services</a><a onclick="filterAndSearch('Beauty Services')">Beauty services</a><a onclick="filterAndSearch('Event Services')">Event services</a><a onclick="nav('search')">All categories</a></div>
+      <div class="footer-col"><div class="footer-col-title">For vendors</div><a onclick="nav('vendor-dashboard')">List your business</a><a onclick="nav('vendor-dashboard')">Vendor dashboard</a><a onclick="showToast('Pricing page coming soon!')">Pricing plans</a></div>
+      <div class="footer-col"><div class="footer-col-title">Company</div><a onclick="showToast('About page coming soon!')">About us</a><a onclick="showToast('Contact page coming soon!')">Contact</a><a onclick="showToast('Privacy policy coming soon!')">Privacy policy</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 ServiceLink Zambia. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="#"><i class="ti ti-brand-facebook"></i></a>
+        <a href="#"><i class="ti ti-brand-instagram"></i></a>
+        <a href="#"><i class="ti ti-brand-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══ SEARCH ══ -->
+<div id="page-search" class="page">
+  <div class="search-header">
+    <h2>Find a service provider</h2>
+    <div class="search-bar-row">
+      <input id="s-query" type="text" placeholder="Photographer, plumber, makeup artist...">
+      <select id="s-city"><option value="">All cities</option><option>Lusaka</option><option>Ndola</option><option>Kitwe</option><option>Livingstone</option></select>
+      <select id="s-cat"><option value="">All categories</option><option>Home Services</option><option>Beauty Services</option><option>Event Services</option></select>
+      <button onclick="renderSearch()">Search</button>
+    </div>
+  </div>
+  <div class="results-area">
+    <div class="results-count" id="results-count"></div>
+    <div class="results-grid" id="results-grid"></div>
+  </div>
+</div>
+
+<!-- ══ VENDOR PROFILE ══ -->
+<div id="page-vendor" class="page">
+  <div class="vp-hero">
+    <div class="vp-hero-inner">
+      <div class="vp-top">
+        <div class="vp-avatar" id="vp-av"></div>
+        <div class="vp-info">
+          <h1 class="vp-name" id="vp-name"></h1>
+          <p class="vp-tagline" id="vp-tagline"></p>
+          <div class="vp-badges">
+            <span class="badge badge-gold"><i class="ti ti-rosette"></i> ServiceLink Verified</span>
+            <span class="badge badge-green"><i class="ti ti-check"></i> Phone verified</span>
+            <span class="badge badge-cat" id="vp-cat-badge"></span>
+          </div>
+          <div class="vp-meta-row">
+            <span class="vp-meta-item"><i class="ti ti-map-pin"></i><span id="vp-location"></span></span>
+            <span class="vp-meta-item"><i class="ti ti-clock"></i> Usually responds in 2hrs</span>
+            <span class="vp-meta-item"><i class="ti ti-calendar"></i> Member since 2024</span>
+          </div>
+        </div>
+        <div class="vp-rating">
+          <div class="vp-rating-num" id="vp-rating"></div>
+          <div class="vp-rating-stars" id="vp-stars"></div>
+          <div class="vp-rating-count" id="vp-review-count"></div>
+        </div>
+      </div>
+      <div class="vp-tabs">
+        <div class="vp-tab active">Overview</div>
+        <div class="vp-tab">Services</div>
+        <div class="vp-tab">Portfolio</div>
+        <div class="vp-tab">Reviews</div>
+      </div>
+    </div>
+  </div>
+  <div class="vp-body">
+    <div>
+      <div class="vp-section"><h3 class="vp-section-title">About</h3><p class="vp-desc" id="vp-about"></p></div>
+      <div class="vp-section"><h3 class="vp-section-title">Services &amp; pricing</h3><div class="svc-grid" id="vp-services"></div></div>
+      <div class="vp-section"><h3 class="vp-section-title">Portfolio</h3>
+        <div class="portfolio-grid">
+          <div class="port-img" style="background:#EDE0C4;">📸</div>
+          <div class="port-img" style="background:#F5ECD7;">🌅</div>
+          <div class="port-img" style="background:#E8D8B8;">💐</div>
+          <div class="port-img" style="background:#F0E6CC;">🎊</div>
+          <div class="port-img" style="background:#EDE0C4;">🤵</div>
+          <div class="port-img" style="background:#F5ECD7;">👗</div>
+        </div>
+      </div>
+      <div class="vp-section"><h3 class="vp-section-title">Customer reviews</h3><div id="vp-reviews"></div></div>
+    </div>
+    <div>
+      <div class="book-card">
+        <div class="book-card-head"><div class="book-card-title">Request a booking</div><div class="book-card-sub">Free to enquire — no commitment</div></div>
+        <div class="book-card-body">
+          <div class="form-row"><label class="form-label">Service</label><select class="form-select" id="vp-svc-select"></select></div>
+          <div class="form-row"><label class="form-label">Preferred date</label><input type="date" class="form-input"></div>
+          <div class="form-row"><label class="form-label">Your name</label><input type="text" class="form-input" placeholder="Full name"></div>
+          <div class="form-row"><label class="form-label">Phone number</label><input type="text" class="form-input" placeholder="+260..."></div>
+          <div class="form-row"><label class="form-label">Notes (optional)</label><textarea class="form-textarea" placeholder="Location, special requests..."></textarea></div>
+          <button class="btn-book-main" onclick="goBooking()">Send booking request</button>
+          <button class="btn-wa"><i class="ti ti-brand-whatsapp"></i> Chat on WhatsApp</button>
+          <div class="avail-note"><i class="ti ti-clock"></i> Usually responds within 2 hours</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-title">Business details</div>
+        <div class="contact-row"><i class="ti ti-map-pin"></i><span id="vp-loc2"></span></div>
+        <div class="contact-row"><i class="ti ti-phone"></i> +260 97X XXX XXX</div>
+        <div class="contact-row"><i class="ti ti-mail"></i><span id="vp-email"></span></div>
+        <div class="stat-mini-grid">
+          <div class="stat-mini"><div class="stat-mini-val" id="vp-s1"></div><div class="stat-mini-lbl">Events</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="vp-s2"></div><div class="stat-mini-lbl">Experience</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="vp-s3"></div><div class="stat-mini-lbl">Reviews</div></div>
+          <div class="stat-mini"><div class="stat-mini-val" id="vp-s4"></div><div class="stat-mini-lbl">Rating</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BOOKING ══ -->
+<div id="page-booking" class="page">
+  <div class="bf-stepper">
+    <div class="bf-steps">
+      <div class="bf-step"><div class="step-num done" id="bs1"><i class="ti ti-check" style="font-size:12px;"></i></div><span class="step-label done" id="bl1">Choose service</span></div>
+      <div class="step-line done" id="bline1"></div>
+      <div class="bf-step"><div class="step-num active" id="bs2">2</div><span class="step-label active" id="bl2">Date &amp; details</span></div>
+      <div class="step-line todo" id="bline2"></div>
+      <div class="bf-step"><div class="step-num todo" id="bs3">3</div><span class="step-label todo" id="bl3">Confirm &amp; send</span></div>
+    </div>
+  </div>
+  <div id="booking-content"></div>
+</div>
+
+<!-- ══ VENDOR DASHBOARD ══ -->
+<div id="page-vendor-dashboard" class="page">
+  <div class="dash">
+    <aside class="dash-sb">
+      <div class="dash-brand"><div class="dash-logo">Service<span>Link</span> ZM</div><div class="dash-logo-sub">Vendor portal</div></div>
+      <div class="dash-pill">
+        <div class="dash-pill-av">L</div>
+        <div><div class="dash-pill-name">Lusaka Lens Studio</div><div class="dash-pill-cat">Photography · Lusaka</div><div class="dash-verified"><i class="ti ti-rosette" style="font-size:11px;"></i> Verified</div></div>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-lbl">Main</div>
+        <div class="dash-nav-item active"><i class="ti ti-layout-dashboard"></i> Overview</div>
+        <div class="dash-nav-item"><i class="ti ti-calendar"></i> Bookings <span class="dash-badge">3</span></div>
+        <div class="dash-nav-item"><i class="ti ti-message-circle"></i> Quote requests <span class="dash-badge">5</span></div>
+        <div class="dash-nav-item"><i class="ti ti-star"></i> Reviews</div>
+        <div class="dash-nav-lbl">Profile</div>
+        <div class="dash-nav-item"><i class="ti ti-user"></i> My profile</div>
+        <div class="dash-nav-item"><i class="ti ti-tools"></i> Services</div>
+        <div class="dash-nav-item"><i class="ti ti-photo"></i> Portfolio</div>
+        <div class="dash-nav-lbl">Account</div>
+        <div class="dash-nav-item"><i class="ti ti-chart-bar"></i> Analytics</div>
+        <div class="dash-nav-item"><i class="ti ti-settings"></i> Settings</div>
+      </nav>
+      <div class="dash-sb-footer">
+        <div style="background:rgba(184,134,11,0.1);border:1px solid rgba(184,134,11,0.2);border-radius:8px;padding:10px 12px;margin-bottom:10px;">
+          <div style="font-size:10px;color:var(--tmod);">Current plan</div>
+          <div style="font-size:12px;font-weight:600;color:var(--gb);">Free listing</div>
+        </div>
+        <button style="width:100%;background:var(--gold);color:var(--wh);border:none;padding:9px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;" onclick="showToast('Upgrade to Pro — K500/month. Coming soon!')">Upgrade to Pro</button>
+      </div>
+    </aside>
+    <div class="dash-main">
+      <div class="dash-topbar">
+        <div><div class="dash-page-title">Good morning, Lusaka Lens</div><div class="dash-page-sub">Tuesday, 10 June 2025 · All data live</div></div>
+        <button class="btn-primary" style="font-size:12px;padding:7px 14px;" onclick="showToast('Add service form coming soon!')"><i class="ti ti-plus"></i> Add service</button>
+      </div>
+      <div class="dash-content">
+        <div style="background:var(--ag);border:1px solid rgba(133,79,11,0.25);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <i class="ti ti-alert-circle" style="font-size:18px;color:var(--ab);flex-shrink:0;"></i>
+          <div style="font-size:12px;color:var(--at);">Your profile is <strong>72% complete.</strong> Add business hours to improve your search ranking. <span style="color:var(--gold);font-weight:600;cursor:pointer;" onclick="showToast('Profile editor coming soon!')">Complete profile →</span></div>
+        </div>
+        <div class="dash-stats">
+          <div class="d-stat"><div class="d-stat-top"><div class="d-stat-icon" style="background:rgba(184,134,11,0.1);color:var(--gold);"><i class="ti ti-calendar-check"></i></div><div class="d-stat-trend"><i class="ti ti-arrow-up" style="font-size:11px;"></i> +4</div></div><div class="d-stat-val">12</div><div class="d-stat-lbl">Bookings this month</div></div>
+          <div class="d-stat"><div class="d-stat-top"><div class="d-stat-icon" style="background:var(--gg);color:var(--gb2);"><i class="ti ti-coin"></i></div><div class="d-stat-trend"><i class="ti ti-arrow-up" style="font-size:11px;"></i> +18%</div></div><div class="d-stat-val">K28,500</div><div class="d-stat-lbl">Earnings this month</div></div>
+          <div class="d-stat"><div class="d-stat-top"><div class="d-stat-icon" style="background:var(--bg2);color:var(--bt);"><i class="ti ti-eye"></i></div><div class="d-stat-trend"><i class="ti ti-arrow-up" style="font-size:11px;"></i> +62</div></div><div class="d-stat-val">347</div><div class="d-stat-lbl">Profile views</div></div>
+          <div class="d-stat"><div class="d-stat-top"><div class="d-stat-icon" style="background:var(--rg);color:var(--rb);"><i class="ti ti-star"></i></div><div class="d-stat-trend" style="color:var(--gold);">2 new</div></div><div class="d-stat-val">4.9★</div><div class="d-stat-lbl">Rating (47 reviews)</div></div>
+        </div>
+        <div class="dash-two">
+          <div class="d-card">
+            <div class="d-card-head"><div class="d-card-title"><i class="ti ti-calendar"></i> Recent bookings</div><div class="d-card-action" onclick="showToast('Full bookings list coming soon!')">View all →</div></div>
+            <div class="d-card-body">
+              <div class="bk-row"><div class="bk-av" style="background:var(--ag);color:var(--at);">NS</div><div><div class="bk-name">Natasha Siame</div><div class="bk-meta">Wedding coverage · 15 Dec 2025</div><div class="bk-action-btns"><button class="btn-accept" onclick="showToast('Booking accepted! SMS sent to Natasha.')">Accept</button><button class="btn-decline" onclick="showToast('Booking declined.')">Decline</button></div></div><div class="bk-right"><div class="bk-amt">K3,500</div><div class="bk-date">Today</div><div style="margin-top:3px;"><span class="pill pill-pending">Pending</span></div></div></div>
+              <div class="bk-row"><div class="bk-av" style="background:var(--bg2);color:var(--bt);">CM</div><div><div class="bk-name">Chanda Mutale</div><div class="bk-meta">Kitchen party · 22 Jun 2025</div></div><div class="bk-right"><div class="bk-amt">K1,200</div><div class="bk-date">3 days ago</div><div style="margin-top:3px;"><span class="pill pill-confirmed">Confirmed</span></div></div></div>
+              <div class="bk-row"><div class="bk-av" style="background:var(--gg);color:var(--gt);">BL</div><div><div class="bk-name">Brian Lungu</div><div class="bk-meta">Corporate event · 5 Jun 2025</div></div><div class="bk-right"><div class="bk-amt">K2,000</div><div class="bk-date">Completed</div><div style="margin-top:3px;"><span class="pill pill-completed">Completed</span></div></div></div>
+            </div>
+          </div>
+          <div class="d-card">
+            <div class="d-card-head"><div class="d-card-title"><i class="ti ti-message-circle"></i> Quote requests</div><div class="d-card-action" onclick="showToast('All quotes coming soon!')">View all →</div></div>
+            <div class="d-card-body">
+              <div class="q-row"><div class="q-top"><div class="q-title">Wedding photographer needed</div><div class="q-time">2h ago</div></div><div class="q-desc">Lusaka, 20 Dec 2025. Church + reception. Budget K4,000.</div><button class="btn-respond" onclick="showToast('Response form coming soon!')">Respond</button></div>
+              <div class="q-row"><div class="q-top"><div class="q-title">Kitchen party shoot</div><div class="q-time">5h ago</div></div><div class="q-desc">Ibex Hill, 28 Jun. Half day, approx 60 guests.</div><button class="btn-respond" onclick="showToast('Response form coming soon!')">Respond</button></div>
+              <div class="q-row"><div class="q-top"><div class="q-title">Corporate conference</div><div class="q-time">Yesterday</div></div><div class="q-desc">Mulungushi Centre, 15 Jul. Full day, 200 delegates.</div><button class="btn-respond" onclick="showToast('Response form coming soon!')">Respond</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-bottom">
+          <div class="d-card">
+            <div class="d-card-head"><div class="d-card-title"><i class="ti ti-star"></i> Latest reviews</div><div class="d-card-action" onclick="showToast('All reviews coming soon!')">View all →</div></div>
+            <div class="d-card-body">
+              <div class="rev-item"><div class="ri-head"><div class="ri-name">Natasha S.</div><div class="ri-stars">★★★★★</div></div><div class="ri-text">"Photos arrived in 3 weeks — every one was stunning."</div><div class="ri-svc">Wedding coverage · 3 days ago</div></div>
+              <div class="rev-item"><div class="ri-head"><div class="ri-name">Brian L.</div><div class="ri-stars">★★★★☆</div></div><div class="ri-text">"Professional team, excellent quality output."</div><div class="ri-svc">Corporate event · 1 week ago</div></div>
+              <div class="rev-item"><div class="ri-head"><div class="ri-name">Thandeka M.</div><div class="ri-stars">★★★★★</div></div><div class="ri-text">"Found them on ServiceLink, booked same day. Amazing!"</div><div class="ri-svc">Graduation shoot · 2 weeks ago</div></div>
+            </div>
+          </div>
+          <div class="d-card">
+            <div class="d-card-head"><div class="d-card-title"><i class="ti ti-checklist"></i> Profile completeness</div><div class="d-card-action">72%</div></div>
+            <div class="d-card-body">
+              <div class="bar-track"><div class="bar-fill" style="width:72%;"></div></div>
+              <div class="pc-item"><div class="pc-icon pc-done"><i class="ti ti-check"></i></div><div><div class="pc-label">Business name &amp; description</div><div class="pc-sub">Complete</div></div></div>
+              <div class="pc-item"><div class="pc-icon pc-done"><i class="ti ti-check"></i></div><div><div class="pc-label">Phone verification</div><div class="pc-sub">Verified</div></div></div>
+              <div class="pc-item"><div class="pc-icon pc-done"><i class="ti ti-check"></i></div><div><div class="pc-label">Services &amp; pricing</div><div class="pc-sub">6 services listed</div></div></div>
+              <div class="pc-item"><div class="pc-icon pc-done"><i class="ti ti-check"></i></div><div><div class="pc-label">Portfolio photos</div><div class="pc-sub">6 photos uploaded</div></div></div>
+              <div class="pc-item"><div class="pc-icon pc-todo"><i class="ti ti-clock"></i></div><div><div class="pc-label">Business hours</div><div class="pc-sub">Not set yet</div></div><div class="pc-pct">+14%</div></div>
+              <div class="pc-item"><div class="pc-icon pc-todo"><i class="ti ti-clock"></i></div><div><div class="pc-label">Service area</div><div class="pc-sub">Not set yet</div></div><div class="pc-pct">+14%</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var VENDORS=[
+  {id:1,name:'Lusaka Lens Studio',init:'L',cat:'Photographers',city:'Lusaka',area:'Kabulonga',rating:4.9,reviews:47,tagline:'Professional wedding & event photography — Lusaka',about:'Lusaka Lens Studio specialises in weddings, kitchen parties, graduations and corporate events. With 6+ years and over 300 events, we deliver galleries families treasure for generations. Same-day sneak peeks and full gallery delivery within 3 weeks.',banner:'📸',bannerBg:'#EDE0C4',email:'info@lusalens.co.zm',stats:['300+','6 yrs','47','4.9★'],services:[{name:'Wedding coverage',price:'K3,500',desc:'Full day (8hrs), 2 photographers, edited gallery'},{name:'Kitchen party',price:'K1,200',desc:'4hrs coverage, 150+ edited photos'},{name:'Graduation shoot',price:'K600',desc:'2hrs, studio or location, 80+ edits'},{name:'Corporate event',price:'K2,000',desc:'Conferences, launches, team photos'},{name:'Photo + video combo',price:'K5,500',desc:'Full wedding, highlight reel included'},{name:'Portrait session',price:'K400',desc:'1hr, 30+ edited photos, digital delivery'}],reviews:[{av:'NS',name:'Natasha Siame',date:'March 2025',stars:'★★★★★',text:'"Absolutely phenomenal. Our wedding photos arrived in under 3 weeks and every single one was stunning. They captured moments we didn\'t even realise were happening."',svc:'Wedding coverage'},{av:'CM',name:'Chanda Mutale',date:'January 2025',stars:'★★★★★',text:'"Booked through ServiceLink and it was seamless. Confirmed the date, paid the deposit, and everything was sorted. Photos from our kitchen party were beautiful."',svc:'Kitchen party'},{av:'BL',name:'Brian Lungu',date:'December 2024',stars:'★★★★☆',text:'"Great photos for our company end-of-year event. Professional team, arrived on time. Delivery took slightly longer than expected but the quality was excellent."',svc:'Corporate event'}]},
+  {id:2,name:'Crown & Glory Salon',init:'C',cat:'Hair Salons',city:'Lusaka',area:'Woodlands',rating:4.8,reviews:92,tagline:'Premium hair salon & beauty services — Woodlands, Lusaka',about:"Crown & Glory is Lusaka's premier hair salon, serving clients since 2018. We offer full hair styling, braiding, colouring and treatments using premium products imported from South Africa. Walk-ins welcome.",banner:'✂️',bannerBg:'#F5ECD7',email:'crown@glory.co.zm',stats:['500+','7 yrs','92','4.8★'],services:[{name:'Hair styling',price:'K200',desc:'Blow dry, set, updo'},{name:'Braiding',price:'K350',desc:'Box braids, cornrows, twists'},{name:'Hair colouring',price:'K500',desc:'Full colour or highlights'},{name:'Hair treatment',price:'K250',desc:'Deep conditioning, keratin'}],reviews:[{av:'TM',name:'Thandeka Mwamba',date:'April 2025',stars:'★★★★★',text:'"Best salon in Lusaka. Always leaves my hair looking absolutely amazing. The team is professional and always on time."',svc:'Hair styling'},{av:'PN',name:"Priscilla Ng'andu",date:'March 2025',stars:'★★★★★',text:'"The braiding here is superb. Takes time but so worth it. I get compliments everywhere I go afterwards."',svc:'Braiding'}]},
+  {id:3,name:'FixIt Zambia',init:'F',cat:'Plumbers',city:'Lusaka',area:'Chilenje',rating:4.6,reviews:61,tagline:'Fast, reliable plumbing & home repairs across Lusaka',about:'FixIt Zambia provides fast, affordable plumbing and home repair services across Lusaka. Team of 5 certified technicians available 7 days a week. Same-day emergency service available for urgent repairs.',banner:'🔧',bannerBg:'#EDE0C4',email:'fixit@zambia.co.zm',stats:['200+','5 yrs','61','4.6★'],services:[{name:'Pipe repair',price:'K150',desc:'Leak fix, pipe replacement'},{name:'Geyser installation',price:'K800',desc:'Supply & install'},{name:'Drain unblocking',price:'K200',desc:'All drain types'},{name:'Full plumbing inspection',price:'K350',desc:'Written report included'}],reviews:[{av:'CM',name:'Chanda Mutale',date:'February 2025',stars:'★★★★★',text:'"Found through ServiceLink. Showed up same day and fixed the leak in an hour. Fair price and very professional."',svc:'Pipe repair'},{av:'SK',name:'Samson Kaseba',date:'January 2025',stars:'★★★★☆',text:'"Good service, fair price. Will definitely use again for any plumbing issues."',svc:'Drain unblocking'}]},
+  {id:4,name:'Savour Events Catering',init:'S',cat:'Caterers',city:'Lusaka',area:'Roma',rating:5.0,reviews:28,tagline:'Premium catering for weddings & events — Lusaka',about:'Savour Events delivers exceptional catering for weddings, kitchen parties, corporate functions and private events. Our team of 10 chefs creates custom menus tailored to your taste and budget. Traditional Zambian and international cuisine available.',banner:'🎂',bannerBg:'#F5ECD7',email:'savour@events.co.zm',stats:['150+','4 yrs','28','5.0★'],services:[{name:'Wedding catering',price:'K5,000',desc:'Full day, up to 200 guests'},{name:'Kitchen party',price:'K2,500',desc:'Traditional & modern menu'},{name:'Corporate lunch',price:'K1,200',desc:'Buffet or plated service'},{name:'Private dinner',price:'K800',desc:'Up to 20 guests, 3-course'}],reviews:[{av:'NS',name:'Natasha Siame',date:'May 2025',stars:'★★★★★',text:'"Perfect catering for our wedding. Every single guest was raving about the food. Savour delivered exactly what we envisioned."',svc:'Wedding catering'},{av:'BL',name:'Bridget Lungu',date:'April 2025',stars:'★★★★★',text:'"Organised, professional, and absolutely delicious. Exactly what we needed for our kitchen party."',svc:'Kitchen party'}]},
+  {id:5,name:'Glamour Studio ZM',init:'G',cat:'Makeup Artists',city:'Lusaka',area:'Kabulonga',rating:4.7,reviews:53,tagline:'Bridal & event makeup specialist — Kabulonga, Lusaka',about:'Glamour Studio ZM specialises in bridal, event and editorial makeup. Lead artist Bridget Mwanza has worked on over 200 weddings and is trained in both African and European beauty techniques. We also offer group packages for bridal parties.',banner:'💄',bannerBg:'#FAEEDA',email:'glamour@studio.co.zm',stats:['200+','5 yrs','53','4.7★'],services:[{name:'Bridal makeup',price:'K800',desc:'Trial session + wedding day'},{name:'Event makeup',price:'K350',desc:'Party, graduation, formal function'},{name:'Group packages',price:'K500',desc:'Bride + 3 bridesmaids'},{name:'Makeup lessons',price:'K200',desc:'1hr private tutorial'}],reviews:[{av:'TM',name:'Thandeka Mwamba',date:'March 2025',stars:'★★★★★',text:'"Looked absolutely stunning on my wedding day. Bridget is a true artist — she understood exactly what I wanted."',svc:'Bridal makeup'}]},
+  {id:6,name:'ProDJ Zambia',init:'P',cat:'DJs',city:'Ndola',area:'Kansenshi',rating:4.5,reviews:34,tagline:'Professional DJ & MC services — Ndola and Lusaka',about:'ProDJ Zambia provides professional DJ and MC services for weddings, kitchen parties, corporate events and private functions. We bring our own high-quality sound and lighting equipment. Available in Ndola and Lusaka.',banner:'🎶',bannerBg:'#E6F1FB',email:'prodj@zambia.co.zm',stats:['400+','8 yrs','34','4.5★'],services:[{name:'Wedding DJ',price:'K1,500',desc:'Full day, sound system included'},{name:'Party DJ',price:'K800',desc:'4hrs, all music genres'},{name:'MC services',price:'K600',desc:'Programme hosting, announcements'},{name:'DJ + MC package',price:'K1,800',desc:'Best value for weddings'}],reviews:[{av:'SK',name:'Samson Kaseba',date:'April 2025',stars:'★★★★★',text:'"Got the whole wedding dancing from start to finish. Incredible energy all night long."',svc:'Wedding DJ'}]}
+];
+
+var currentVendor=null,bookingStep=2,selSvc='Wedding coverage',selPrice='K3,500',selDate='';
+
+function nav(p){
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo(0,0);
+  if(p==='home')renderFeatured();
+  if(p==='search')renderSearch();
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},3200);
+}
+
+function doSearch(){
+  var q=document.getElementById('hero-search').value;
+  document.getElementById('s-query').value=q;
+  nav('search');
+}
+
+function filterAndSearch(cat){
+  document.getElementById('s-query').value='';
+  document.getElementById('s-cat').value=cat;
+  nav('search');
+}
+
+function renderFeatured(){
+  var el=document.getElementById('featured-vendors');
+  if(!el)return;
+  el.innerHTML=VENDORS.slice(0,4).map(vcardHTML).join('');
+}
+
+function renderSearch(){
+  var q=(document.getElementById('s-query').value||'').toLowerCase();
+  var city=document.getElementById('s-city').value;
+  var cat=document.getElementById('s-cat').value;
+  var f=VENDORS.filter(function(v){
+    var mq=!q||v.name.toLowerCase().includes(q)||v.cat.toLowerCase().includes(q)||v.city.toLowerCase().includes(q)||v.area.toLowerCase().includes(q);
+    var mc=!city||v.city===city;
+    var mcat=!cat||v.cat.toLowerCase().includes(cat.toLowerCase())||cat.toLowerCase().includes(v.cat.toLowerCase());
+    return mq&&mc&&mcat;
+  });
+  document.getElementById('results-count').textContent=f.length+' provider'+(f.length!==1?'s':'')+' found'+(q?' for "'+q+'"':'');
+  document.getElementById('results-grid').innerHTML=f.length?f.map(vcardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--tm);">No providers found. Try a different search.</div>';
+}
+
+function vcardHTML(v){
+  return '<div class="vendor-card" onclick="openVendor('+v.id+')">'
+    +'<div class="vendor-banner" style="background:'+v.bannerBg+'">'+v.banner+'</div>'
+    +'<div class="vendor-body">'
+    +'<div class="vendor-top"><div class="vendor-name">'+v.name+'</div><span class="verified-badge">✓ Verified</span></div>'
+    +'<div class="vendor-cat">'+v.cat+' · '+v.city+'</div>'
+    +'<div class="vendor-stars">★★★★★ <span style="font-size:12px;color:#9E8060;">'+v.rating+' ('+v.reviews+' reviews)</span></div>'
+    +'<div class="vendor-loc"><i class="ti ti-map-pin"></i> '+v.area+', '+v.city+'</div>'
+    +'<button class="btn-book" onclick="event.stopPropagation();openVendor('+v.id+')">View profile &amp; book</button>'
+    +'</div></div>';
+}
+
+function openVendor(id){
+  var v=VENDORS.find(function(x){return x.id===id;});
+  if(!v)return;
+  currentVendor=v;
+  document.getElementById('vp-av').textContent=v.init;
+  document.getElementById('vp-name').textContent=v.name;
+  document.getElementById('vp-tagline').textContent=v.tagline;
+  document.getElementById('vp-cat-badge').textContent=v.cat;
+  document.getElementById('vp-location').textContent=v.area+', '+v.city;
+  document.getElementById('vp-rating').textContent=v.rating;
+  document.getElementById('vp-stars').textContent='★★★★★';
+  document.getElementById('vp-review-count').textContent=v.reviews+' reviews';
+  document.getElementById('vp-about').textContent=v.about;
+  document.getElementById('vp-loc2').textContent=v.area+', '+v.city;
+  document.getElementById('vp-email').textContent=v.email;
+  document.getElementById('vp-s1').textContent=v.stats[0];
+  document.getElementById('vp-s2').textContent=v.stats[1];
+  document.getElementById('vp-s3').textContent=v.stats[2];
+  document.getElementById('vp-s4').textContent=v.stats[3];
+  document.getElementById('vp-services').innerHTML=v.services.map(function(s){
+    return '<div class="svc-card"><div class="svc-name">'+s.name+'</div><div class="svc-price">From '+s.price+'</div><div class="svc-desc">'+s.desc+'</div></div>';
+  }).join('');
+  document.getElementById('vp-svc-select').innerHTML=v.services.map(function(s){return '<option>'+s.name+'</option>';}).join('');
+  document.getElementById('vp-reviews').innerHTML=v.reviews.map(function(r){
+    return '<div class="review-card"><div class="rev-head"><div class="rev-reviewer"><div class="rev-av">'+r.av+'</div><div><div class="rev-name">'+r.name+'</div><div class="rev-date">'+r.date+'</div></div></div><div class="rev-stars">'+r.stars+'</div></div><p class="rev-text">'+r.text+'</p><span class="rev-svc">'+r.svc+'</span></div>';
+  }).join('');
+  nav('vendor');
+}
+
+function goBooking(){
+  if(!currentVendor)return;
+  bookingStep=2;
+  selSvc=currentVendor.services[0].name;
+  selPrice=currentVendor.services[0].price;
+  selDate='';
+  renderBooking();
+  nav('booking');
+}
+
+function renderBooking(){
+  updateStepper();
+  var c=document.getElementById('booking-content');
+  if(bookingStep===2)c.innerHTML=step2HTML();
+  else if(bookingStep===3)c.innerHTML=step3HTML();
+  else c.innerHTML=confirmHTML();
+}
+
+function updateStepper(){
+  [[1,'bs1','bl1','bline1'],[2,'bs2','bl2','bline2'],[3,'bs3','bl3',null]].forEach(function(s){
+    var idx=s[0],ne=document.getElementById(s[1]),le=document.getElementById(s[2]);
+    if(!ne||!le)return;
+    if(idx<bookingStep){ne.className='step-num done';ne.innerHTML='<i class="ti ti-check" style="font-size:12px;"></i>';le.className='step-label done';if(s[3])document.getElementById(s[3]).className='step-line done';}
+    else if(idx===bookingStep){ne.className='step-num active';ne.textContent=idx;le.className='step-label active';if(s[3])document.getElementById(s[3]).className='step-line todo';}
+    else{ne.className='step-num todo';ne.textContent=idx;le.className='step-label todo';if(s[3])document.getElementById(s[3]).className='step-line todo';}
+  });
+}
+
+function step2HTML(){
+  var v=currentVendor;
+  return '<div class="bf-body"><div>'
+    +'<div style="font-family:\'Playfair Display\',serif;font-size:1.15rem;color:var(--bd);margin-bottom:5px;">Date &amp; your details</div>'
+    +'<div style="font-size:13px;color:var(--tm);margin-bottom:16px;">Tell '+v.name+' when you need them and how to reach you</div>'
+    +'<div class="bf-card"><div class="bf-card-head"><div class="bf-card-icon"><i class="ti ti-tools"></i></div><div class="bf-card-title">Select a service</div></div><div class="bf-card-body">'
+    +v.services.map(function(s,i){return '<div class="svc-option'+(i===0?' selected':'')+'" onclick="pickSvc(this,\''+s.name+'\',\''+s.price+'\')">'
+      +'<div class="svc-radio'+(i===0?' checked':'')+'"></div>'
+      +'<div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--bd);">'+s.name+'</div><div style="font-size:11px;color:var(--tm);">'+s.desc+'</div></div>'
+      +'<div style="font-size:13px;font-weight:600;color:var(--gold);white-space:nowrap;">From '+s.price+'</div>'
+      +'</div>';}).join('')
+    +'</div></div>'
+    +'<div class="bf-card"><div class="bf-card-head"><div class="bf-card-icon"><i class="ti ti-user"></i></div><div class="bf-card-title">Your details</div></div><div class="bf-card-body">'
+    +'<div class="two-col"><div class="form-row"><label class="form-label">First name</label><input class="form-input" id="bf-fn" type="text" placeholder="Natasha"></div>'
+    +'<div class="form-row"><label class="form-label">Last name</label><input class="form-input" id="bf-ln" type="text" placeholder="Siame"></div></div>'
+    +'<div class="form-row"><label class="form-label">Phone number</label><input class="form-input" id="bf-ph" type="text" placeholder="+260 97X XXX XXX"></div>'
+    +'<div class="form-row"><label class="form-label">Preferred date</label><input class="form-input" id="bf-dt" type="date" onchange="selDate=this.value"></div>'
+    +'<div class="form-row"><label class="form-label">Event location</label><input class="form-input" id="bf-loc" type="text" placeholder="Venue name or area in Lusaka"></div>'
+    +'<div class="form-row"><label class="form-label">Notes (optional)</label><textarea class="form-textarea" id="bf-notes" placeholder="Number of guests, special requests..."></textarea></div>'
+    +'</div></div>'
+    +'<div class="bf-nav-btns"><button class="btn-back" onclick="nav(\'vendor\')"><i class="ti ti-arrow-left"></i> Back to profile</button>'
+    +'<button class="btn-next" onclick="goStep3()">Review booking <i class="ti ti-arrow-right"></i></button></div>'
+    +'</div>'+sumSidebarHTML()+'</div>';
+}
+
+function step3HTML(){
+  var fn=document.getElementById('bf-fn')?document.getElementById('bf-fn').value||'Customer':'Customer';
+  var ph=document.getElementById('bf-ph')?document.getElementById('bf-ph').value||'+260 9XX XXX XXX':'+260 9XX XXX XXX';
+  var dt=selDate||'Date to be confirmed';
+  var loc=document.getElementById('bf-loc')?document.getElementById('bf-loc').value||'Lusaka':'Lusaka';
+  var notes=document.getElementById('bf-notes')?document.getElementById('bf-notes').value||'None':'None';
+  var v=currentVendor;
+  return '<div class="bf-body"><div>'
+    +'<div style="font-family:\'Playfair Display\',serif;font-size:1.15rem;color:var(--bd);margin-bottom:5px;">Review &amp; send request</div>'
+    +'<div style="font-size:13px;color:var(--tm);margin-bottom:16px;">Check everything before sending to '+v.name+'</div>'
+    +'<div class="bf-card"><div class="bf-card-head"><div class="bf-card-icon"><i class="ti ti-clipboard-list"></i></div><div class="bf-card-title">Booking summary</div></div><div class="bf-card-body">'
+    +'<div class="sum-row" style="padding:8px 0;"><span class="sum-lbl">Vendor</span><span class="sum-val">'+v.name+'</span></div>'
+    +'<div class="sum-row" style="padding:8px 0;"><span class="sum-lbl">Service</span><span class="sum-val">'+selSvc+'</span></div>'
+    +'<div class="sum-row" style="padding:8px 0;"><span class="sum-lbl">Date</span><span class="sum-val">'+dt+'</span></div>'
+    +'<div class="sum-row" style="padding:8px 0;"><span class="sum-lbl">Location</span><span class="sum-val">'+loc+'</span></div>'
+    +'<div class="sum-row" style="padding:8px 0;border-bottom:none;"><span class="sum-lbl">Notes</span><span class="sum-val">'+notes+'</span></div>'
+    +'</div></div>'
+    +'<div class="bf-card"><div class="bf-card-head"><div class="bf-card-icon"><i class="ti ti-user"></i></div><div class="bf-card-title">Your contact details</div></div><div class="bf-card-body">'
+    +'<div class="sum-row" style="padding:8px 0;"><span class="sum-lbl">Name</span><span class="sum-val">'+fn+'</span></div>'
+    +'<div class="sum-row" style="padding:8px 0;border-bottom:none;"><span class="sum-lbl">Phone</span><span class="sum-val">'+ph+'</span></div>'
+    +'</div></div>'
+    +'<div class="info-box"><i class="ti ti-info-circle"></i><div class="info-box-text">Sending a request is <strong>free and non-binding.</strong> The vendor will review and respond within 2 hours. No payment required now.</div></div>'
+    +'<div class="bf-nav-btns"><button class="btn-back" onclick="bookingStep=2;renderBooking();"><i class="ti ti-arrow-left"></i> Edit details</button>'
+    +'<button class="btn-next" onclick="bookingStep=4;renderBooking();"><i class="ti ti-send"></i> Send booking request</button></div>'
+    +'</div>'+sumSidebarHTML()+'</div>';
+}
+
+function confirmHTML(){
+  var ref='SLZ-2025-0'+Math.floor(4000+Math.random()*1000);
+  return '<div class="confirm-screen">'
+    +'<div class="confirm-icon"><i class="ti ti-check"></i></div>'
+    +'<h2 class="confirm-title">Request sent!</h2>'
+    +'<p class="confirm-sub">Your booking request has been sent to <strong>'+(currentVendor?currentVendor.name:'the vendor')+'.</strong> They\'ll review it and respond to you directly via phone or WhatsApp within 2 hours.</p>'
+    +'<div class="confirm-ref"><div class="confirm-ref-lbl">Booking reference</div><div class="confirm-ref-val">'+ref+'</div></div>'
+    +'<div class="confirm-steps">'
+    +'<div class="cs-item"><div class="cs-num">1</div><div class="cs-text"><strong>Check your phone</strong> — SMS confirmation sent shortly</div></div>'
+    +'<div class="cs-item"><div class="cs-num">2</div><div class="cs-text"><strong>Vendor responds within 2 hrs</strong> — they\'ll call or WhatsApp you</div></div>'
+    +'<div class="cs-item"><div class="cs-num">3</div><div class="cs-text"><strong>Agree the final price</strong> and lock in your date together</div></div>'
+    +'<div class="cs-item"><div class="cs-num">4</div><div class="cs-text"><strong>After the job is done</strong> — come back to ServiceLink and leave a review</div></div>'
+    +'</div>'
+    +'<div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">'
+    +'<button class="btn-primary" onclick="nav(\'search\')" style="padding:12px 28px;font-size:14px;">Find more vendors</button>'
+    +'<button class="btn-outline" onclick="showToast(\'Booking tracker coming soon!\')" style="padding:11px 24px;font-size:14px;">Track this booking</button>'
+    +'</div></div>';
+}
+
+function sumSidebarHTML(){
+  var v=currentVendor;if(!v)return '';
+  return '<div><div class="sum-sidebar">'
+    +'<div class="sum-head"><div class="sum-title">Your booking</div><div class="sum-sub">Summary updates as you go</div></div>'
+    +'<div class="sum-vendor"><div class="sum-av">'+v.init+'</div><div><div class="sum-vname">'+v.name+'</div><div class="sum-vcat">'+v.cat+' · '+v.city+'</div></div></div>'
+    +'<div class="sum-body">'
+    +'<div class="sum-row"><span class="sum-lbl">Service</span><span class="sum-val">'+selSvc+'</span></div>'
+    +'<div class="sum-row"><span class="sum-lbl">Date</span><span class="sum-val" style="color:var(--tm);">'+(selDate||'Not selected')+'</span></div>'
+    +'<div class="sum-row"><span class="sum-lbl">Location</span><span class="sum-val" style="color:var(--tm);">'+v.city+'</span></div>'
+    +'<div class="sum-total"><span class="sum-total-lbl">Starting from</span><span class="sum-total-val">'+selPrice+'</span></div>'
+    +'<div class="sum-note"><i class="ti ti-info-circle" style="font-size:12px;vertical-align:-2px;"></i> Final price confirmed by vendor after booking</div>'
+    +'</div></div>'
+    +'<div style="margin-top:12px;background:var(--wh);border:1px solid var(--cm);border-radius:12px;overflow:hidden;">'
+    +'<div style="padding:11px 14px;background:var(--bd);"><div style="font-size:12px;font-weight:600;color:var(--tod);">What happens next</div></div>'
+    +'<div style="padding:12px 14px;">'
+    +'<div class="cs-item" style="border-color:var(--cm);"><div class="cs-num">1</div><div class="cs-text"><strong>Vendor notified</strong> immediately by SMS</div></div>'
+    +'<div class="cs-item" style="border-color:var(--cm);"><div class="cs-num">2</div><div class="cs-text"><strong>They confirm</strong> within 2 hours</div></div>'
+    +'<div class="cs-item"><div class="cs-num">3</div><div class="cs-text"><strong>Agree price</strong> and lock in the date</div></div>'
+    +'</div></div>'
+    +'</div>';
+}
+
+function pickSvc(el,name,price){
+  document.querySelectorAll('.svc-option').forEach(function(o){o.classList.remove('selected');o.querySelector('.svc-radio').classList.remove('checked');});
+  el.classList.add('selected');el.querySelector('.svc-radio').classList.add('checked');
+  selSvc=name;selPrice=price;
+}
+
+function goStep3(){
+  selDate=document.getElementById('bf-dt')?document.getElementById('bf-dt').value:'';
+  bookingStep=3;renderBooking();
+}
+
+renderFeatured();
+</script>
+</body>
+</html>
